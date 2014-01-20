@@ -1,0 +1,12 @@
+{
+  "name": "alamid-request",
+  "version": "0.0.1",
+  "description": "abstracting http/websockets requests",
+  "main": "lib/index.js",
+   "dependencies": {
+       "session.socket.io": "0.1.x",
+       "middler": "0.7.x"
+   },
+  "author": "meaku <michael.jaser@peerigon.com>",
+  "license": "MIT"
+}
