@@ -1,14 +1,14 @@
 "use strict";
 
 var SessionSockets = require('session.socket.io'),
-    wsAdapter = require("./wsAdapter.js"),
     noop = function () {
     };
 
-
-function wsHandler(io, options) {
+function socketIoPlugin(alamidRequest, options) {
     options = options || {};
+
     var errorHandler = options.onError || noop,
+        io = options.io,
         sockets,
         session;
 
@@ -37,30 +37,29 @@ function wsHandler(io, options) {
                     return;
                 }
 
-                wsAdapter(request, session, callback);
+                alamidRequest.adapters.ws(request, session, callback);
             });
+        });
+    }
+
+    function handleSocket(socket) {
+        //attach ws listeners here
+        socket.on("request", function (request, callback) {
+            alamidRequest.adapters.ws(request, {}, callback);
+        });
+    }
+
+    function reloadSession(session, callback) {
+        session.reload(function (err) {
+            if (err) {
+                callback(err);
+                return;
+            }
+
+            session = session.req.session;
+            callback(null);
         });
     }
 }
 
-function handleSocket(socket) {
-    //attach ws listeners here
-    socket.on("request", function (request, callback) {
-        wsAdapter(request, {}, callback);
-    });
-}
-
-function reloadSession(session, callback) {
-    session.reload(function (err) {
-        if (err) {
-            callback(err);
-            return;
-        }
-
-        session = session.req.session;
-        callback(null);
-    });
-}
-
-
-module.exports = wsHandler;
+module.exports = socketIoPlugin;
