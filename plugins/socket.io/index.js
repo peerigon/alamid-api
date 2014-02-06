@@ -34,10 +34,17 @@ function socketIoPlugin(alamidRequest, options) {
             reloadSession(session, function (err) {
                 if (err) {
                     errorHandler(err);
+                    callback({
+                        status: "error",
+                        code: "invalid-session"
+                    });
                     return;
                 }
 
-                alamidRequest.adapters.ws(request, session, callback);
+                alamidRequest.adapters.ws(request, session, function () {
+                    session.save();
+                    callback.apply(this, arguments);
+                });
             });
         });
     }
