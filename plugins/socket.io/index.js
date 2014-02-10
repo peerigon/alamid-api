@@ -53,7 +53,7 @@ function socketIoPlugin(alamidRequest, options) {
                     errorHandler(err);
                     callback({
                         status: "error",
-                        code: "invalid-session"
+                        error: "invalid-session"
                     });
                     return;
                 }
