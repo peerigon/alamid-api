@@ -1,6 +1,6 @@
 {
   "name": "alamid-request",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "abstracting http/websockets requests",
   "main": "lib/index.js",
   "dependencies": {
@@ -11,7 +11,7 @@
     "chai": "1.x",
     "socket.io-client": "0.9.x",
     "request": "2.x",
-    "connect": "~2.12.0"
+    "connect": "2.x"
   },
   "author": "meaku <michael.jaser@peerigon.com>",
   "license": "MIT"
