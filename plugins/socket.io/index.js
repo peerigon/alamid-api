@@ -4,6 +4,19 @@ var SessionSockets = require('session.socket.io'),
     noop = function () {
     };
 
+/**
+ * socket.io plugin
+ *
+ * configuration:
+ * - io: socket.io instance
+ * - session: session configuration (optional)
+ *
+ * attaches an event-listener on "request" events
+ * if <session> is set, the request gets a reference to it
+ *
+ * @param alamidRequest
+ * @param options
+ */
 function socketIoPlugin(alamidRequest, options) {
     options = options || {};
 
@@ -11,6 +24,10 @@ function socketIoPlugin(alamidRequest, options) {
         io = options.io,
         sockets,
         session;
+
+    if(!io) {
+        throw new Error("Missing socket.io instance, Please pass a reference via config");
+    }
 
     if (options.session) {
         session = options.session;
@@ -30,7 +47,7 @@ function socketIoPlugin(alamidRequest, options) {
 
         //attach ws listeners here
         socket.on("request", function (request, callback) {
-            //get the latest session state (needed if http/ws in are both in use)
+            //get the latest session state (needed if http/ws are both in use)
             reloadSession(session, function (err) {
                 if (err) {
                     errorHandler(err);
@@ -50,7 +67,6 @@ function socketIoPlugin(alamidRequest, options) {
     }
 
     function handleSocket(socket) {
-        //attach ws listeners here
         socket.on("request", function (request, callback) {
             alamidRequest.adapters.ws(request, {}, callback);
         });
