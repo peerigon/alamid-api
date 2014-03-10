@@ -25,14 +25,14 @@ function enhancedResponsePlugin() {
     /**
      * ends the response with fail object
      *
-     * @param error
+     * @param code
      * @param data
      * @returns {http.ServerResponse}
      */
-    http.ServerResponse.prototype.fail = function (error, data) {
+    http.ServerResponse.prototype.fail = function (code, data) {
         this.send(400, {
             status: "fail",
-            error: error,
+            code: code,
             data: data || {}
         });
 
@@ -42,14 +42,14 @@ function enhancedResponsePlugin() {
     /**
      * ends the response with error object
      *
-     * @param error
+     * @param code
      * @param data
      * @returns {http.ServerResponse}
      */
-    http.ServerResponse.prototype.error = function (error, data) {
+    http.ServerResponse.prototype.error = function (code, data) {
         this.send(500, {
             status: "error",
-            error: error,
+            code: code,
             data: data || {}
         });
 
@@ -58,37 +58,73 @@ function enhancedResponsePlugin() {
 
     /**
      * ends the response
-     * can be called with strings or objects
+     * can be called with optional status code and response
+     * uses res.status, res.data res.error if called without args
      *
      * @param {Number=} statusCode
-     * @param {String|Object} response
+     * @param {String|Object=} response
      * @returns {http.ServerResponse}
      */
-    http.ServerResponse.prototype.send = function (statusCode, response) {
+    http.ServerResponse.prototype.send = function send(statusCode, response) {
+
+        if (arguments.length === 2) {
+            this.statusCode = statusCode;
+        }
+
         if (arguments.length === 1) {
-            statusCode = 200;
             response = arguments[0];
         }
 
-        this.statusCode = statusCode;
+        if (typeof this.status === "number") {
+            this.statusCode = this.status;
+            this.status = statusCodeToStatus(this.statusCode);
+        }
+
+        this.status = this.status || statusCodeToStatus(this.statusCode);
+
+        if (arguments.length === 0) {
+
+            response = {
+                status: this.status,
+                data: this.data || {}
+            };
+
+            if (this.code) {
+                response.code = this.code;
+            }
+
+            if(this.message) {
+                response.message = this.message;
+            }
+        }
 
         if (typeof response === "object") {
             response = JSON.stringify(response);
         }
 
         this.end(response);
-        return this;
     };
+}
 
-    /**
-     * sets the statusCode
-     * @param {Number} code
-     * @returns {http.ServerResponse}
-     */
-    http.ServerResponse.prototype.status = function (code) {
-        this.statusCode = code;
-        return this;
-    };
+var statusMapping = {
+    "success": 200,
+    "fail": 400,
+    "error": 500
+};
+
+function statusCodeToStatus(statusCode) {
+    if (statusCode <= 200 && statusCode < 299) {
+        return "success";
+    }
+    else if (statusCode >= 400 && statusCode < 499) {
+        return "fail";
+    }
+
+    return "error";
+}
+
+function statusToStatusCode(status) {
+    return statusMapping[status];
 }
 
 module.exports = enhancedResponsePlugin;
