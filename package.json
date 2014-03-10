@@ -1,6 +1,6 @@
 {
-  "name": "alamid-request",
-  "version": "0.1.0",
+  "name": "alamid-api",
+  "version": "0.2.0",
   "description": "abstracting http/websockets requests",
   "main": "lib/index.js",
   "dependencies": {
@@ -11,8 +11,9 @@
     "chai": "1.x",
     "socket.io-client": "0.9.x",
     "request": "2.x",
-    "connect": "2.x"
+    "connect": "2.x",
+    "chai-spies": "0.5.x"
   },
-  "author": "meaku <michael.jaser@peerigon.com>",
+  "author": "peerigon <developers@peerigon.com>",
   "license": "MIT"
 }
