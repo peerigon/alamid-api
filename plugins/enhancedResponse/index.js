@@ -113,10 +113,10 @@ var statusMapping = {
 };
 
 function statusCodeToStatus(statusCode) {
-    if (statusCode <= 200 && statusCode < 299) {
+    if (statusCode >= 200 && statusCode < 300) {
         return "success";
     }
-    else if (statusCode >= 400 && statusCode < 499) {
+    else if (statusCode >= 400 && statusCode < 500) {
         return "fail";
     }
 
