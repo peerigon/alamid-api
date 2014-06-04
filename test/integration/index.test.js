@@ -5,7 +5,7 @@ var chai = require("chai"),
     io = require("socket.io-client"),
     expect = chai.expect;
 
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 
 var socket;
 
@@ -113,11 +113,6 @@ function runTests() {
 
 describe("request", function () {
 
-    before(function (done) {
-        socket = io.connect("ws://localhost:3000");
-        done();
-    });
-
     describe("#http", function () {
 
         before(function () {
@@ -129,8 +124,11 @@ describe("request", function () {
 
     describe("#ws", function () {
 
-        before(function () {
+        before(function (done) {
             request.type = "ws";
+
+            socket = io("ws://localhost:3000");
+            socket.on("connect", done);
         });
 
         runTests();
