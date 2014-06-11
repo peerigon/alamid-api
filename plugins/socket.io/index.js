@@ -1,6 +1,6 @@
 "use strict";
 
-var ioSession = require("./middleware/ioSession.js"),
+var ioSession = require("socket.io-session-middleware"),
     noop = function () {
     };
 

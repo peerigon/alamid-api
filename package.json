@@ -17,7 +17,8 @@
         "request": "2.x",
         "connect": "2.x",
         "chai-spies": "0.5.x",
-        "socket.io": "1.x"
+        "socket.io": "1.x",
+        "socket.io-session-middleware": "*"
     },
     "author": "peerigon <developers@peerigon.com>",
     "license": "MIT"
