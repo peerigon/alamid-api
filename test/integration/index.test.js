@@ -9,7 +9,7 @@ chai.config.includeStack = true;
 
 var socket;
 
-require("../server");
+require("../support/server.js");
 
 function request(options, callback) {
     request.type = request.type || "http";

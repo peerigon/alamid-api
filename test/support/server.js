@@ -2,7 +2,7 @@
 
 var connect = require("connect"),
     http = require("http"),
-    alamidRequest = require("../lib");
+    alamidRequest = require("../../lib/index");
 
 var app = connect(),
     server = http.createServer(app),
@@ -10,8 +10,8 @@ var app = connect(),
 
 app.use(connect.json());
 
-alamidRequest.use(require("../plugins/connect"), { app: app });
-alamidRequest.use(require("../plugins/socket.io"), { io: io });
+alamidRequest.use(require("../../plugins/connect/index"), { app: app });
+alamidRequest.use(require("../../plugins/socket.io/index.js"), { io: io });
 
 var router = alamidRequest.router();
 

@@ -2,7 +2,7 @@
 
 var connect = require("connect"),
     http = require("http"),
-    alamidRequest = require("../lib");
+    alamidRequest = require("../../lib/index");
 
 var app = connect(),
     server = http.createServer(app),
@@ -15,13 +15,15 @@ var session = {
     cookieParser: connect.cookieParser("secret")
 };
 
+app.use(connect.query());
 app.use(connect.json());
 app.use(session.cookieParser);
+
 app.use(connect.session(session));
 app.use(connect.static(__dirname));
 
-alamidRequest.use(require("../plugins/connect"), { app: app });
-alamidRequest.use(require("../plugins/socket.io"), { io: io, session: session, onError: function(err) {
+alamidRequest.use(require("../../plugins/connect/index"), { app: app });
+alamidRequest.use(require("../../plugins/socket.io/index.js"), { io: io, session: session, onError: function(err) {
     console.log("err", err);
 } });
 
@@ -33,17 +35,17 @@ router.add(function (req, res) {
         req.session.test = req.body.session;
     }
 
+    //set if req.query.test is present
+    if(req.query && req.query.test) {
+        req.session.test = req.query.test;
+    }
+
     res.end(JSON.stringify({
         status: "success",
         data: {
-            url: req.url,
-            body: req.body,
-            query: req.query,
-            method: req.method,
-            transport: req.transport,
             session: req.session.test
         }
     }));
 });
 
-server.listen(3000);
+server.listen(parseInt(process.env.PORT));

@@ -6,7 +6,7 @@ var chai = require("chai"),
 
 chai.use(require("chai-spies"));
 
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 
 var enhancedResponse = require("../../../../plugins/enhancedResponse/");
 
@@ -33,7 +33,7 @@ describe("enhancedResponse()", function () {
             };
 
             res.end = chai.spy(function () {
-                console.log(arguments);
+
             });
         });
 

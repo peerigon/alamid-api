@@ -4,7 +4,7 @@ var chai = require("chai"),
     expect = chai.expect,
     http = require("http");
 
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 
 var prepareRequest = require("../../../../lib/transport/prepareRequest.js");
 
