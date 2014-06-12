@@ -1,5 +1,7 @@
 Abstracting different transports (http/websockets) and libraries to a unite them all.
 
+[![browser support](https://ci.testling.com/peerigon/alamid-class.png)
+
 ## Usage
 
 ```javascript
