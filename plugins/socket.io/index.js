@@ -74,6 +74,12 @@ function socketIoPlugin(alamidRequest, options) {
     }
 
     function reloadSession(session, callback) {
+
+        if(!session || !session.reload) {
+            callback(new Error("Could no reload session"));
+            return;
+        }
+
         session.reload(function (err) {
             if (err) {
                 callback(err);
