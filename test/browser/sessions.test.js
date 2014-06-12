@@ -2,7 +2,7 @@
 
 var chai = require("chai"),
     httpRequest = require("browser-request"),
-    socketIo = require("../../node_modules/socket.io/node_modules/socket.io-client/index.js"),
+    socketIo = require("socket.io-client"),
     expect = chai.expect,
     when = require("when");
 
