@@ -1,46 +1,56 @@
 {
-  "name": "alamid-api",
-  "version": "0.3.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/peerigon/alamid-api.git"
-  },
-  "scripts": {
-      "test": "./node_modules/.bin/mocha --recursive test/integration/ test/unit/"
-  },
-  "description": "abstracting http/websockets requests",
-  "main": "lib/index.js",
-  "dependencies": {
-    "socket.io-session-middleware": "0.x",
-    "middler": "0.7.x"
-  },
-  "devDependencies": {
-    "chai": "1.x",
-    "socket.io-client": "1.x",
-    "browser-request": "0.x",
-    "request": "*",
-    "testling": "1.x",
-    "connect": "2.x",
-    "chai-spies": "0.5.x",
-    "socket.io": "1.x",
-    "mocha": "^1.20.1",
-    "when": "3.x"
-  },
-  "testling": {
-    "browsers": [
-      "ie6",
-      "ie7",
-      "ie8",
-      "ie9",
-      "firefox/15",
-      "chrome/22",
-      "opera/12",
-      "safari/5.1"
+    "name": "alamid-api",
+    "version": "0.3.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/peerigon/alamid-api.git"
+    },
+    "scripts": {
+        "test": "./node_modules/.bin/mocha --recursive test/integration/ test/unit/"
+    },
+    "description": "abstracting http/websockets requests",
+    "main": "lib/index.js",
+    "dependencies": {
+        "socket.io-session-middleware": "0.x",
+        "middler": "0.7.x"
+    },
+    "devDependencies": {
+        "chai": "1.x",
+        "socket.io-client": "1.x",
+        "browser-request": "0.x",
+        "request": "*",
+        "testling": "1.x",
+        "connect": "2.x",
+        "chai-spies": "0.5.x",
+        "socket.io": "1.x",
+        "mocha": "^1.20.1",
+        "when": "3.x"
+    },
+    "keywords": [
+        "socket.io",
+        "connect",
+        "express",
+        "session",
+        "http",
+        "websockets",
+        "jsend",
+        "multi-transport"
     ],
-    "server": "node test/support/sessionServer.js",
-    "harness": "mocha",
-    "files": "test/browser/sessions.test.js"
-  },
-  "author": "peerigon <developers@peerigon.com>",
-  "license": "MIT"
+    "testling": {
+        "browsers": [
+            "ie6",
+            "ie7",
+            "ie8",
+            "ie9",
+            "firefox/15",
+            "chrome/22",
+            "opera/12",
+            "safari/5.1"
+        ],
+        "server": "node test/support/sessionServer.js",
+        "harness": "mocha",
+        "files": "test/browser/sessions.test.js"
+    },
+    "author": "peerigon <developers@peerigon.com>",
+    "license": "MIT"
 }
