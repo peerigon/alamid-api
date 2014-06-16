@@ -1,6 +1,8 @@
 Abstracting different transports (http/websockets) and libraries to a unite them all.
 
-[![browser support](https://ci.testling.com/peerigon/alamid-class.png)
+![browser support](https://ci.testling.com/peerigon/alamid-api.png)
+![Build Status](https://travis-ci.org/peerigon/alamid-api.svg?branch=master)
+![Dependency Status](https://david-dm.org/peerigon/alamid-api.svg)
 
 ## Usage
 
