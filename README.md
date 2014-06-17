@@ -47,4 +47,13 @@ __API__
 - res.fail(code)
 - res.error(code)
 
+## Browser Integration Tests
+
+Use [testling](https://github.com/substack/testling) to run the integration test in your favourite browser. 
+
+__Examples__ 
+- Google Chrome on OSX `./node_modules/.bin/testling -x /usr/bin/open -a "/Applications/Google Chrome.app"`
+- Default browser on OSX`./node_modules/.bin/testling -u`
+
+
 
