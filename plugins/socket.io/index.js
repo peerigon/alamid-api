@@ -44,7 +44,7 @@ function socketIoPlugin(alamidRequest, options) {
         socket.on("request", function (request, callback) {
 
             //get the latest session state (needed if http/ws are both in use)
-            reloadSession(socket.session, function (err) {
+            reloadSession(socket, function (err) {
 
                 if (err) {
                     errorHandler(err);
@@ -73,20 +73,20 @@ function socketIoPlugin(alamidRequest, options) {
         next();
     }
 
-    function reloadSession(session, callback) {
+    function reloadSession(socket, callback) {
 
-        if(!session || !session.reload) {
-            callback(new Error("Could no reload session"));
+        if(!socket || !socket.session || !socket.session.reload) {
+            callback(new Error("Could not reload session"));
             return;
         }
 
-        session.reload(function (err) {
+        socket.session.reload(function (err) {
             if (err) {
                 callback(err);
                 return;
             }
 
-            session = session.req.session;
+            socket.session = socket.session.req.session;
             callback(null);
         });
     }
