@@ -13,17 +13,17 @@ var socket,
 
 function request(options) {
 
-    request.type = request.type || "http";
+    request.transport = options.transport || request.transport || "http";
 
     if (options.url.indexOf("http") === -1) {
         options.url = host + options.url;
     }
 
-    console.log("Request > " + options.url);
+    console.log("Request > " + options.url + " [" + request.transport + "]");
 
     return when.promise(function (resolve, reject) {
 
-        if (request.type === "http") {
+        if (request.transport === "http") {
 
             if (typeof(options.body) === "object") {
                 options.headers = {"content-type": "application/json"};
@@ -45,7 +45,7 @@ function request(options) {
                 resolve(body);
             });
         }
-        else if (request.type === "ws") {
+        else if (request.transport === "ws") {
             socket.emit("request", options, function (res) {
                 if (typeof res !== "object") {
                     res = JSON.parse(res);
@@ -54,7 +54,7 @@ function request(options) {
             });
         }
         else {
-            reject(new Error("Invalid transport '" + request.type + "'"));
+            reject(new Error("Invalid transport '" + request.transport + "'"));
         }
     });
 }
@@ -82,6 +82,9 @@ describe("session support", function () {
     describe("#http", function () {
 
         it("should be able to save and read value from/to the session", function (done) {
+
+            request.transport = "http";
+
             request({
                 url: "/test/?test=http1",
                 method: "get"
@@ -118,6 +121,9 @@ describe("session support", function () {
     describe("#ws", function () {
 
         it("should be able to save and read value from/to the session", function (done) {
+
+            request.transport = "ws";
+
             request({
                 url: "/test/?test=ws1",
                 method: "get"
@@ -153,14 +159,16 @@ describe("session support", function () {
     describe("#mixed ws/http", function () {
 
         it("should be able to save and read value from/to the session via http and ws", function (done) {
+
+
             request({
                 url: "/test/?test=viaHttp",
                 method: "get",
-                type: "http"
+                transport: "http"
             })
                 .then(function() {
                     return request({
-                        type: "ws",
+                        transport: "ws",
                         url: "/test",
                         method: "get"
                     });
@@ -169,14 +177,14 @@ describe("session support", function () {
                     expect(body.data.session).to.eql("viaHttp");
 
                     return request({
-                        type: "ws",
+                        transport: "ws",
                         url: "/test/?test=viaWs",
                         method: "get"
                     });
                 })
                 .then(function() {
                     return request({
-                        type: "http",
+                        transport: "http",
                         url: "/test/",
                         method: "get"
                     });
